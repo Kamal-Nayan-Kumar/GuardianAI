@@ -1,94 +1,46 @@
-# Persona Chatbot 🎭
+# Real-Time Cyberbullying Detection API
 
-A chatbot with 5 different teenage personas for educational and research purposes. Built with FastAPI, HTML/CSS/JS, and Supabase.
+This project is a real-time, privacy-first API designed to detect cyberbullying in chat conversations. It uses a fine-tuned RoBERTa model that runs on a local server, ensuring that no message content ever leaves the user's device.
 
-## 📁 Project Structure
+## Features
 
-```
-chatbot-personas/
-├── backend/
-│   ├── app.py              # Main FastAPI application
-│   ├── models.py           # Data models
-│   ├── personas.py         # Persona definitions
-│   ├── rate_limiter.py     # Rate limiting logic
-│   └── requirements.txt    # Python dependencies
-├── frontend/
-│   ├── index.html         # Main HTML file
-│   ├── styles.css         # CSS styling
-│   └── script.js          # JavaScript functionality
-├── .env                   # Environment variables
-└── README.md
-```
+- **High Accuracy**: Achieves over 90% F1-score in detecting toxic and bullying language.
+- **Real-Time Analysis**: Analyzes messages as they are sent to provide immediate feedback.
+- **Privacy-First**: All model inference happens locally. Only anonymized alerts are sent out.
+- **Stateful Logic**: Detects patterns of harassment over a series of messages, not just single instances.
 
-## 🚀 Quick Start
+## Model and Dataset
 
-### 1. Clone & Setup
-```
-git clone https://github.com/Kamal-Nayan-Kumar/GuardianAI.git
+- **Model**: The fine-tuned model is available on the Hugging Face Hub: [nayan90k/roberta-finetuned-cyberbullying-detection](https://huggingface.co/nayan90k/roberta-finetuned-cyberbullying-detection)
+- **Dataset**: The balanced, cleaned dataset used for training is available here: [nayan90k/cyberbullying-tweets-balanced](https://huggingface.co/datasets/nayan90k/cyberbullying-tweets-balanced)
 
-cd GuardianAI
-```
+## Architecture
 
-### 2. Configure Environment
-```
-cp env.example .env
-```
-Edit `.env` with your API keys:
-```
-SUPABASE_URL=your_supabase_url
-SUPABASE_KEY=your_supabase_key
-PERPLEXITY_API_KEY=your_perplexity_key
-SECRET_KEY=your_secret_key
-```
+The system consists of three main components:
+1.  **FastAPI Backend** (`app.py`): A Python server that loads the model and exposes an API endpoint for analysis.
+2.  **Chat Frontend**: A web-based chat application that sends messages to the local backend.
+3.  **Parent Dashboard**: A separate application that receives alerts when a bullying pattern is detected.
 
-### 3. Install Dependencies
-```
-cd backend
-pip install -r requirements.txt
-```
+For deployment, the frontend and backend are designed to be packaged together in an **Electron** desktop application.
 
-### 4. Run Application
-```
-python app.py
-```
+## How to Run Locally
 
-### 5. Access Chatbot
-Open your browser and go to:
-```
-http://localhost:8000/static/index.html
-```
+1.  **Clone the repository:**
+    ```
+    git clone https://github.com/Kamal-Nayan-Kumar/GuardianAI.git
+    cd GuardianAI/model
+    ```
 
-## 👥 Available Personas
+2.  **Install dependencies:**
+    ```
+    pip install -r requirements.txt
+    ```
 
-- **Aarohi** (15) - The Romantic Risk-Taker 💖
-- **Kabir** (16) - The Peer Pressure Responder 🔥
-- **Meher** (16) - The Social Status Climber ✨
-- **Raghav** (15) - The Isolated Confidant-Seeker 🤔
-- **Simran** (14) - The Impulsive Reactor 😏
+3.  **Run the server:**
+    ```
+    uvicorn app:app --reload
+    ```
 
-## 🔧 Requirements
+4.  The API will be available at `http://127.0.0.1:8000`.
 
-- Python 3.8+
-- Supabase account
-- Perplexity AI API key
 
-## 📝 Features
-
-- 5 unique personalities with authentic responses
-- Rate limiting (50 messages/day per user)
-- Modern Instagram-like UI
-- Session management
-- Conversation history storage
-
-## 🛠️ Tech Stack
-
-- **Backend**: FastAPI, Python
-- **Frontend**: HTML, CSS, JavaScript
-- **Database**: Supabase
-- **AI**: Perplexity API
-
----
-
-⚠️ **Note**: This is for educational/research purposes only.
-
----
